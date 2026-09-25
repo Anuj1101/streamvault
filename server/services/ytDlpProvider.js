@@ -1,6 +1,7 @@
 import { spawn } from 'child_process';
 import config from '../config/index.js';
 import logger from '../utils/logger.js';
+import withYouTubeCookies from '../utils/ytDlpArgs.js';
 
 function formatSeconds(totalSeconds) {
   if (!totalSeconds || isNaN(totalSeconds)) return '0:00';
@@ -22,7 +23,7 @@ export class YtDlpProvider {
    */
   async getMetadata(canonicalUrl) {
     return new Promise((resolve, reject) => {
-      const args = [
+      const args = withYouTubeCookies([
         '-m',
         'yt_dlp',
         '--dump-single-json',
@@ -30,7 +31,7 @@ export class YtDlpProvider {
         '--no-warnings',
         '--skip-download',
         canonicalUrl
-      ];
+      ]);
 
       logger.info(`Fetching metadata for URL: ${canonicalUrl}`);
       const proc = spawn(config.pythonPath, args, {

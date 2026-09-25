@@ -6,6 +6,7 @@ import http from 'http';
 import config from '../config/index.js';
 import logger from '../utils/logger.js';
 import tempFileManager from '../utils/tempFileManager.js';
+import withYouTubeCookies from '../utils/ytDlpArgs.js';
 
 export class MediaProcessor {
   /**
@@ -46,7 +47,7 @@ export class MediaProcessor {
 
     // Use yt-dlp to write thumbnail into jobDir
     const outputTemplate = path.join(jobDir, `${sanitizedTitle}.%(ext)s`);
-    const args = [
+    const args = withYouTubeCookies([
       '-m',
       'yt_dlp',
       '--write-thumbnail',
@@ -57,7 +58,7 @@ export class MediaProcessor {
       '-o',
       outputTemplate,
       canonicalUrl
-    ];
+    ]);
 
     await this.runProcess(config.pythonPath, args, jobDir, (percent, msg) => {
       onProgress({ status: 'processing', percent: Math.max(30, Math.min(85, percent)), message: msg });
@@ -91,7 +92,7 @@ export class MediaProcessor {
     const outputFilename = `${sanitizedTitle}.${format}`;
     const outputTemplate = path.join(jobDir, `${sanitizedTitle}.%(ext)s`);
 
-    const args = [
+    const args = withYouTubeCookies([
       '-m',
       'yt_dlp',
       '-x',
@@ -101,7 +102,7 @@ export class MediaProcessor {
       '--no-playlist',
       '-o',
       outputTemplate
-    ];
+    ]);
 
     if (format === 'mp3') {
       args.push('--audio-quality', '320K');
@@ -156,7 +157,7 @@ export class MediaProcessor {
       formatFilter = 'bestvideo[height<=360]+bestaudio/best[height<=360]';
     }
 
-    const args = [
+    const args = withYouTubeCookies([
       '-m',
       'yt_dlp',
       '-f',
@@ -168,7 +169,7 @@ export class MediaProcessor {
       '-o',
       outputTemplate,
       canonicalUrl
-    ];
+    ]);
 
     onProgress({ status: 'processing', percent: 15, message: `Downloading video (${quality.toUpperCase()})...` });
 
