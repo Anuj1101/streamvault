@@ -32,6 +32,9 @@ const config = {
   maxFileSizeMB: parseInt(process.env.MAX_FILE_SIZE || '500', 10),
   pythonPath: process.env.PYTHON_PATH || (process.platform === 'win32' ? 'python' : 'python3'),
   youtubeCookiesPath: resolveYouTubeCookiesPath(),
+  trustProxy: process.env.TRUST_PROXY === 'false'
+    ? false
+    : parseInt(process.env.TRUST_PROXY || '1', 10),
   rateLimits: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxRequests: parseInt(process.env.RATE_LIMIT_MAX || '100', 10),

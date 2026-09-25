@@ -148,6 +148,7 @@ Environment variables:
 | `PYTHON_PATH` | `python` | Python executable containing `yt-dlp` |
 | `YOUTUBE_COOKIES_FILE` | Empty | Absolute path to a Netscape-format YouTube cookies file mounted on the server |
 | `YOUTUBE_COOKIES_BASE64` | Empty | Base64-encoded Netscape-format YouTube cookies file, useful for hosted deployments |
+| `TRUST_PROXY` | `1` | Number of reverse proxies in front of the server, required for Render rate-limit IP detection |
 | `RATE_LIMIT_MAX` | `100` | Max requests per IP per 15 minutes |
 
 YouTube may require an authenticated browser session when requests come from a hosted server. Export cookies from a dedicated YouTube account using a trusted browser extension, convert the Netscape-format file to base64, and set `YOUTUBE_COOKIES_BASE64` in the server deployment environment. Do not commit cookies, place them in client-side code, or log them. Rotate the cookie value when the browser session expires.

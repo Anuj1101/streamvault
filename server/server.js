@@ -9,6 +9,9 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
+// Render places the service behind one reverse proxy.
+app.set('trust proxy', config.trustProxy);
+
 // Security HTTP headers
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
@@ -64,6 +67,7 @@ if (process.env.NODE_ENV !== 'test') {
   server = app.listen(config.port, () => {
     logger.info(`Media Downloader Server running on port ${config.port} [${config.nodeEnv}]`);
     logger.info(`Allowed frontend URL: ${config.frontendUrl}`);
+    logger.info(`YouTube cookies: ${config.youtubeCookiesPath ? 'configured' : 'not configured'}`);
   });
 }
 
