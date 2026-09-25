@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const rawBase = import.meta.env.VITE_API_URL || '';
+const cleanBase = rawBase.replace(/\/+$/, '');
+
 const api = axios.create({
-  baseURL: '/api/media',
+  baseURL: `${cleanBase}/api/media`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -44,7 +47,7 @@ export async function getJobProgress(jobId) {
 }
 
 export function getFileDownloadUrl(jobId) {
-  return `/api/media/file/${jobId}`;
+  return `${cleanBase}/api/media/file/${jobId}`;
 }
 
 export default {
