@@ -12,7 +12,7 @@ const config = {
     ? path.resolve(process.env.TEMP_DIRECTORY)
     : path.join(os.tmpdir(), 'yt_downloader_temp'),
   maxFileSizeMB: parseInt(process.env.MAX_FILE_SIZE || '500', 10),
-  pythonPath: process.env.PYTHON_PATH || 'python',
+  pythonPath: process.env.PYTHON_PATH || (process.platform === 'win32' ? 'python' : 'python3'),
   rateLimits: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     maxRequests: parseInt(process.env.RATE_LIMIT_MAX || '100', 10),
