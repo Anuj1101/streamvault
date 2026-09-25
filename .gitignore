@@ -30,4 +30,6 @@ yarn-error.log*
 Thumbs.db
 
 # Exclude unrelated folders
+skillforge
 skillforge/
+skillforge/**
